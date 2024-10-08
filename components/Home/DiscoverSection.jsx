@@ -4,68 +4,42 @@ import { WithLocalSvg } from "react-native-svg/css";
 
 const { width } = Dimensions.get("window"); // Get the screen width
 
+const iconSize = width * 0.05; // Define icon size based on screen width
+const largeIconSize = width * 0.1; // Define large icon size
+
 export default function DiscoverSection() {
-  const iconSize = width * 0.05;
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
+    <View style={styles.container}>
       <View>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "flex-start",
-          }}
-        >
+        <View style={styles.locationContainer}>
           <WithLocalSvg
             width={iconSize}
             height={iconSize}
             asset={require("../../assets/images/svg/location_icon.svg")}
           />
-          <Text
-            style={{
-              fontFamily: "PoppinsMedium",
-              fontSize: 12,
-              // paddingHorizontal: 4,
-              marginHorizontal: 4,
-            }}
-          >
-            Germany
-          </Text>
+          <Text style={styles.locationText}>Germany</Text>
           <WithLocalSvg
             width={iconSize}
             height={iconSize}
             asset={require("../../assets/images/svg/dropdown-icon.svg")}
           />
         </View>
-        <View style={{ marginRight: "auto" }}>
-          <Text
-            style={{
-              fontFamily: "PoppinsBold",
-              fontSize: 24,
-            }}
-          >
-            Discover
-          </Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.titleText}>Discover</Text>
         </View>
       </View>
-      <View style={{ flexDirection: "row" }}>
-        <View style={{ paddingHorizontal: 5 }}>
+      <View style={styles.iconsContainer}>
+        <View style={styles.iconWrapper}>
           <WithLocalSvg
-            width={width * 0.1}
-            height={width * 0.1}
+            width={largeIconSize}
+            height={largeIconSize}
             asset={require("../../assets/images/svg/search-icon.svg")}
           />
         </View>
-        <View style={{ paddingHorizontal: 5 }}>
+        <View style={styles.iconWrapper}>
           <WithLocalSvg
-            width={width * 0.1}
-            height={width * 0.1}
+            width={largeIconSize}
+            height={largeIconSize}
             asset={require("../../assets/images/svg/filter-icon.svg")}
           />
         </View>
@@ -73,3 +47,34 @@ export default function DiscoverSection() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  locationContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  locationText: {
+    fontFamily: "PoppinsMedium",
+    fontSize: 12,
+    marginHorizontal: 4,
+  },
+  titleContainer: {
+    marginRight: "auto",
+  },
+  titleText: {
+    fontFamily: "PoppinsBold",
+    fontSize: 24,
+  },
+  iconsContainer: {
+    flexDirection: "row",
+  },
+  iconWrapper: {
+    paddingHorizontal: 5,
+  },
+});
