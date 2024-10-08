@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React from "react";
 
-const { width, height } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
 export default function profile() {
   return (
     <View style={styles.container}>

@@ -3,7 +3,6 @@ import {
   View,
   Text,
   FlatList,
-  Image,
   StyleSheet,
   Dimensions,
   ImageBackground,
@@ -53,9 +52,7 @@ const DATA = [
   },
 ];
 
-const windowWidth = Dimensions.get("window").width;
-
-const NewUsersListSection = () => {
+export default function NewUsersListSection() {
   const renderItem = ({ item }) => (
     <View style={styles.cardContainer}>
       <ImageBackground
@@ -111,7 +108,7 @@ const NewUsersListSection = () => {
       contentContainerStyle={styles.list}
     />
   );
-};
+}
 
 const styles = StyleSheet.create({
   list: {
@@ -182,5 +179,3 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
   },
 });
-
-export default NewUsersListSection;

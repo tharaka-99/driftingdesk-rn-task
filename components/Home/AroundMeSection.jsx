@@ -41,6 +41,7 @@ export default function AroundMeSection() {
     longitudeDelta: 0.01,
   });
 
+  // Request location permissions and watch user's location
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
@@ -49,6 +50,7 @@ export default function AroundMeSection() {
         return;
       }
 
+      // Track location updates every 5 seconds or 10 meters movement
       await Location.watchPositionAsync(
         {
           accuracy: Location.Accuracy.High,
@@ -69,6 +71,7 @@ export default function AroundMeSection() {
 
   return (
     <View>
+      {/* Section Header */}
       <View>
         <Text style={styles.aboutmeHeaderText}>Around me</Text>
       </View>
@@ -78,6 +81,8 @@ export default function AroundMeSection() {
           serving around you
         </Text>
       </View>
+
+      {/* Map Section */}
       <View style={styles.container}>
         <MapView
           style={styles.map}
@@ -94,16 +99,8 @@ export default function AroundMeSection() {
                 longitude: loc.longitude,
               }}
             >
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  paddingTop: height * 0.1,
-                  width: width * 0.7,
-                }}
-              >
-                {/* Online Tag */}
+              <View style={styles.markerContainer}>
+                {/* Display Online Tag if User is Online */}
                 <View
                   style={{ justifyContent: "center", alignItems: "center" }}
                 >
@@ -124,7 +121,7 @@ export default function AroundMeSection() {
                       </Text>
                     </View>
                   )}
-                  {/* Profile Image */}
+                  {/* Display User Profile Image */}
                   <Image
                     source={loc.image}
                     style={[
@@ -186,5 +183,12 @@ const styles = StyleSheet.create({
   onlineText: {
     color: "#FFFFFF",
     fontSize: 12,
+  },
+  markerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: height * 0.1,
+    width: width * 0.7,
   },
 });

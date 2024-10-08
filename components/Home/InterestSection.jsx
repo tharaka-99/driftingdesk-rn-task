@@ -1,14 +1,14 @@
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
-  FlatList,
   ScrollView,
   Dimensions,
 } from "react-native";
-import React from "react";
 
+// Sample data for interests
 const DATA = [
   { id: "1", title: "⚽️ BBQ", selected: false },
   { id: "2", title: "🍃 Homemade", selected: false },
@@ -20,150 +20,74 @@ const DATA = [
   // Add more items as needed
 ];
 
-const renderGridItems = () => {
-  const items = [];
-  for (let i = 0; i < DATA.length; i += 2) {
-    items.push(
-      <View key={i} style={styles.columnContainer}>
-        <View style={styles.itemContainer}>
-          <Text style={styles.itemText}>{DATA[i].title}</Text>
-        </View>
-        {DATA[i + 1] && (
-          <View style={styles.itemContainer}>
-            <Text style={styles.itemText}>{DATA[i + 1].title}</Text>
-          </View>
-        )}
-      </View>
-    );
-  }
-  return items;
-};
-
-const firstRow = DATA.filter((item, index) => index % 2 === 0);
-const secondRow = DATA.filter((item, index) => index % 2 !== 0);
-
-const renderRow = (rowData) => (
-  <View style={styles.row}>
-    {rowData.map((item) => (
-      <TouchableOpacity
-        key={item.id}
-        style={[styles.interestItem, item.selected ? styles.selected : null]}
-      >
-        <Text style={item.selected ? styles.selectedText : styles.text}>
-          {item.title}
-        </Text>
-      </TouchableOpacity>
-    ))}
-  </View>
-);
-
 const { width } = Dimensions.get("window");
 
 export default function InterestSection() {
-  const renderItemsInRows = (item) => {
-    const rows = [];
+  // Renders a row of interest items
+  const renderRow = (rowData) => (
+    <View style={styles.row}>
+      {rowData.map((item) => (
+        <TouchableOpacity
+          key={item.id}
+          style={[styles.interestItem, item.selected ? styles.selected : null]}
+        >
+          <Text style={item.selected ? styles.selectedText : styles.text}>
+            {item.title}
+          </Text>
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
 
-    for (let i = 0; i < item.length; i += 2) {
-      rows.push(
-        <View key={i} style={styles.row}>
-          <TouchableOpacity
-            style={[
-              styles.interestItem,
-              item[i].selected ? styles.selected : null,
-            ]}
-          >
-            <Text style={item[i].selected ? styles.selectedText : styles.text}>
-              {item[i].title}
-            </Text>
-          </TouchableOpacity>
-
-          {item[i + 1] && (
-            <TouchableOpacity
-              style={[
-                styles.interestItem,
-                item[i + 1].selected ? styles.selected : null,
-              ]}
-            >
-              <Text
-                style={item[i + 1].selected ? styles.selectedText : styles.text}
-              >
-                {item[i + 1].title}
-              </Text>
-            </TouchableOpacity>
-          )}
-        </View>
-      );
-    }
-
-    return rows;
-  };
-
-  //   const firstRowItems = interests.filter((_, index) => index % 2 === 0);
-  //   const secondRowItems = interests.filter((_, index) => index % 2 !== 0);
+  // Split DATA into two rows
+  const firstRow = DATA.filter((_, index) => index % 2 === 0);
+  const secondRow = DATA.filter((_, index) => index % 2 !== 0);
 
   return (
     <View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={{ fontFamily: "PoppinsBold", fontSize: 24 }}>
-          Interest
-        </Text>
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Interest</Text>
         <TouchableOpacity underlayColor="#FFA50050">
-          <Text
-            style={{
-              fontFamily: "PoppinsMedium",
-              fontSize: 16,
-              color: "#FFA500",
-            }}
-          >
-            View All
-          </Text>
+          <Text style={styles.viewAllText}>View All</Text>
         </TouchableOpacity>
       </View>
-      <View>
-        {/* <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContainer}
-        >
-         
-
-          {renderItemsInRows()}
-        </ScrollView> */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.scrollContainer}
-        >
-          <View>
-            {renderRow(firstRow)}
-            {renderRow(secondRow)}
-          </View>
-        </ScrollView>
-      </View>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}
+      >
+        <View>
+          {renderRow(firstRow)}
+          {renderRow(secondRow)}
+        </View>
+      </ScrollView>
     </View>
   );
 }
 
+// Styles for the component
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row", // Stack items vertically
-    marginRight: 10, // Add margin between columns
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 10,
   },
   headerText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#26222B",
+    fontFamily: "PoppinsBold",
+    fontSize: 24,
+  },
+  viewAllText: {
+    fontFamily: "PoppinsMedium",
+    fontSize: 16,
+    color: "#FFA500",
   },
   scrollContainer: {
     flexDirection: "row",
-    // alignItems: "center",
-    // paddingVertical: 10,
+  },
+  row: {
+    flexDirection: "row", // Stack items horizontally
+    marginRight: 10, // Add margin between rows
   },
   interestItem: {
     paddingVertical: 8,
@@ -172,11 +96,9 @@ const styles = StyleSheet.create({
     borderColor: "rgba(75, 22, 76, 0.2)",
     borderRadius: 50,
     marginVertical: 5,
+    marginRight: 5,
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "flex-start",
-    marginRight: 5,
-    // flexWrap: "wrap",
   },
   text: {
     fontFamily: "PoppinsMedium",
@@ -188,32 +110,7 @@ const styles = StyleSheet.create({
   },
   selectedText: {
     fontFamily: "PoppinsMedium",
-    color: "rgba(255, 255, 255, 1)",
+    color: "#FFFFFF",
     fontSize: 16,
   },
-  //   scrollContainer: {
-  //     paddingHorizontal: 10,
-  //   },
-  //   row: {
-  //     flexDirection: "row",
-  //     marginBottom: 10,
-  //   },
-  //   interestItem: {
-  //     padding: 10,
-  //     backgroundColor: "#f0f0f0",
-  //     borderRadius: 5,
-  //     marginHorizontal: 5,
-  //   },
-  //   selected: {
-  //     backgroundColor: "#4CAF50",
-  //   },
-  //   text: {
-  //     fontSize: 16,
-  //     textAlign: "center",
-  //   },
-  //   selectedText: {
-  //     color: "#fff",
-  //     fontSize: 16,
-  //     textAlign: "center",
-  //   },
 });

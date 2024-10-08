@@ -8,12 +8,12 @@ import {
 } from "react-native";
 import React from "react";
 
-const { width, height } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
 
-export default function Message() {
+export default function Home() {
   return (
     <View style={styles.container}>
-      <Text>Message</Text>
+      <Text>Home</Text>
     </View>
   );
 }
